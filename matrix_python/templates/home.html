@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Matrix Generator</title>
+  </head>
+  <body>
+    <form action = "" method = "get">
+        <label for="rows">Rows:&nbsp;&nbsp;&nbsp;&nbsp;</label> 
+        <input id="rows" type="text" name="rows" required>
+        <br><br>
+        <label for="columns">Columns:&nbsp;</label> 
+        <input id="columns" type="text" name="columns" required> 
+        <br><br>
+        <label for="bounds">Bounds:&nbsp;&nbsp;</label> 
+        <input id="bounds" type="text" name="bounds" required>
+        <br><br> 
+        <label for="unique"> Unique Valued Matrix</label>
+        <input type="checkbox" id="unique" name="unique" value="unique">
+        <input type="submit" value="OK" onclick="location.href='{%url 'matrix_view' %}'"> 
+    </form>
+    <br><br>
+    <!-- Switch to matrix_view defined in urls.py on clicking submit button -->
+    <button id='submit' onclick="location.href='{%url 'matrix_view' %}'">Submit</button>
+  </body> 
+</html>
