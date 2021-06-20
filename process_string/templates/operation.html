@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>String Processor</title>
+  </head>
+  <body>
+    <form action = "" method = "get">
+        <label for="textinp">Enter text: </label> 
+        <input id="textinp" type="text" name="textinp" required>
+        <br><br> 
+        <label for="operation"> Operation: &nbsp</label>
+        <select id="operation" name="operation">
+          <option value="1">Type 1: Vowel to Uppercase</option>
+          <option value="2">Type 2: Reverse word</option>
+          <option value="3">Type 3: Alphanumeric word sort</option>
+          <option value="4">Type 4: Remove Duplicates</option>
+          <option value="5">Type 5: Replace with next character</option>
+          <option value="6">Type 6: Encrypt</option>
+        </select>
+        <input type="submit" value="OK"> 
+    </form>
+    <br><br>
+    <button id='submit' onclick="location.href='{%url 'operation_view' %}'">Submit</button>
+    
+    {% if Input %}
+    <p>Input String: </p>
+    {{Input}}
+    {% else %}
+    'No Data!!'
+    {% endif %}
+    
+    {% if Output %}
+    <p>Output String: </p>
+    <p> {{Output}}</p>
+    {% else %}
+    'No Data!!'
+    {% endif %}
+    
+    {% if Opcode in '6' %}
+    <button id='decrypt' onclick="location.href='{%url 'reverseop_view' %}'">Decrypt</button>
+    {% endif %}
+    
+    <br>
+    <!-- Switch to home_view defined in urls.py on clicking return to home button -->
+    <button id="home_button" onclick="location.href='{%url 'home_view' %}'">Return to Home</button>
+  </body> 
+</html>
