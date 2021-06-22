@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <title>Dynamic Control</title>
+  </head>
+  <body>
+    <form action = "" method = "get">
+      {%if Number %}
+      <label for="number">Enter number (1-100): </label> 
+      <input id="number" type="number" name="number" value="{{Number}}" readonly="readonly">
+      <br><br>
+      <label for="columns">Enter columns: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> 
+      <input id="columns" type="columns" name="columns" value="{{Columns}}" readonly="readonly">
+      {% else %}
+      <label for="number">Enter number (1-100): </label> 
+      <input id="number" type="number" name="number" required>
+      <br><br>
+      <label for="columns">Enter columns: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> 
+      <input id="columns" type="columns" name="columns" required>
+      {% endif %}
+      <input class = 'button' type="submit" value="OK"> 
+  </form>
+  <br><br>
+  <!-- Switch to matrix_view defined in urls.py on clicking submit button -->
+  <button class = 'button' id='submit' onclick="location.href='{%url 'drop_down' %}'">Submit</button>
+    <br><br>
+    {% if Droplist %}
+    <form id = "gen_dropdown" action = "" method = "get">
+    <select id="drop_select" name="drop_select">
+    
+    {% endif %}
+    <input class = 'button' id = "submission" type="submit" value="OK">
+    </form>
+    <div id = "updation">
+     {%if Option%}
+     <p>Option Selected: {{i}}. Random Array Value:  {{Option}}</p>
+     {%endif%}
+     {% if Y1 %}
+     <p>Button/Option Type: {{Y1}}</p>
+     {% endif %}
+     {% if Y2 %}
+     <p>Datatype: {{Y2}}</p>
+     {% else %}
+     <br><br>
+     {% endif %}
+    </div>
+    <button class = 'button' id='submit_option' onclick="location.href='{%url 'show_result' %}'">Show</button>
+    <br><br>
+    <!-- Switch to home_view defined in urls.py on clicking return to home button -->
+    <button class = 'button' id="home_button" onclick="location.href='{%url 'home_view' %}'">Return to Home</button>
+  </body> 
+</html>
+<script>
+  var droplist = JSON.parse("{{Droplist|escapejs}}");
+  console.log(droplist);
+  const getSelect = document.getElementById("drop_select");
+  var i;
+  var arraylist = droplist.toString().split(',');
+  console.log(arraylist.length);
+  for(i=0;i<arraylist.length;i++)
+  {
+    var addOption = document.createElement("option")
+    addOption.innerText = i+1+'. Random Array Value: '+arraylist[i];
+    addOption.value = i;
+    addOption.id = i;
+    getSelect.appendChild(addOption);
+  }
+  var idx = parseInt("{{i|escapejs}}");
+  idx = idx - 1;
+  getSelect.selectedIndex = idx;
+</script>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <title>Dynamic Control</title>
+  </head>
+  <body>
+    <form action = "" method = "get">
+      {%if Number %}
+      <label for="number">Enter number (1-100): </label> 
+      <input id="number" type="number" name="number" value="{{Number}}" readonly="readonly">
+      <br><br>
+      <label for="columns">Enter columns: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> 
+      <input id="columns" type="columns" name="columns" value="{{Columns}}" readonly="readonly">
+      {% else %}
+      <label for="number">Enter number (1-100): </label> 
+      <input id="number" type="number" name="number" required>
+      <br><br>
+      <label for="columns">Enter columns: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> 
+      <input id="columns" type="columns" name="columns" required>
+      {% endif %}
+      <input class = 'button' type="submit" value="OK"> 
+  </form>
+  <br><br>
+  <!-- Switch to matrix_view defined in urls.py on clicking submit button -->
+  <button class = 'button' id='submit' onclick="location.href='{%url 'drop_down' %}'">Submit</button>
+    <br><br>
+    {% if Droplist %}
+    <form action = "" method = "get">
+    <select id="drop_select" name="drop_select">
+    
+    {% endif %}
+    <input class = 'button' type="submit" value="OK">
+    </form>
+    <p>Option Selected: {{i}}. Random Array Value: {{Option}}</p>  
+    <p>Button/Option Type: {{Y1}}</p>
+    <p>Datatype: {{Datatype}}</p>
+    <button class = 'button' id='submit_option' onclick="location.href='{%url 'show_result' %}'">Show</button>
+    <div id='result'>
+    <table id = 'myTable' border="1">
+
+    </table>
+    </div>
+    <br><br>
+    <button class = 'button' id="drop_button" onclick="location.href='{%url 'drop_down' %}'">Return to Drop Down List</button>
+    <br>
+    <!-- Switch to home_view defined in urls.py on clicking return to home button -->
+    <button class = 'button' id="home_button" onclick="location.href='{%url 'home_view' %}'">Return to Home</button>
+  </body> 
+</html>
+<script>
+  var droplist = JSON.parse("{{Droplist|escapejs}}");
+  const getSelect = document.getElementById("drop_select");
+  const getresult = document.getElementById("result");
+  var i;
+  var arraylist = droplist.toString().split(',');
+  for(i=0;i<arraylist.length;i++)
+  {
+    var addOption = document.createElement("option")
+    addOption.innerText = i+1+'. Random Array Value: '+arraylist[i];
+    addOption.value = i;
+    getSelect.appendChild(addOption);
+  }
+  var idx = parseInt("{{i|escapejs}}");
+  idx = idx - 1;
+  getSelect.selectedIndex = idx;
+  var Y1 = JSON.parse("{{Y1|escapejs}}");
+  var labels = JSON.parse("{{Labels|escapejs}}");
+  Y1=parseInt(Y1);
+  labels = labels.toString().split(',');
+  const table = document.getElementById("myTable");
+  const selt = document.createElement("select");
+  const columns = JSON.parse("{{Columns|escapejs}}");
+  var rownum = 0;
+  var colnum = 0;
+  console.log(columns)
+  for(i=0;i<labels.length;i++)
+  {
+    if(colnum>=columns)
+    {
+      colnum = 0;
+    }
+    if(Y1==1)
+    {
+      if(colnum == 0)
+      {
+        var row = document.createElement("tr");
+        rownum = rownum+1;
+      }
+      var cell = document.createElement("td");
+      colnum = colnum+1;
+      var addLabel = document.createElement("label");
+      addLabel.innerText = labels[i];
+      cell.appendChild(addLabel);
+      row.appendChild(cell);
+      table.appendChild(row);
+    }
+    if(Y1==2)
+    {
+      if(colnum == 0)
+      {
+        var row = document.createElement("tr");
+        rownum = rownum+1;
+      }
+      var cell = document.createElement("td");
+      colnum = colnum+1;
+      var addInput =  document.createElement("input");
+      addInput.type = "text";
+      addInput.value = labels[i];
+      cell.appendChild(addInput);
+      row.appendChild(cell);
+      table.appendChild(row);
+    }
+    if(Y1==3)
+    {
+      if(colnum == 0)
+      {
+        var row = document.createElement("tr");
+        rownum = rownum+1;
+      }
+      var cell = document.createElement("td");
+      colnum = colnum+1;
+      var addLabel = document.createElement("label");
+      addLabel.innerText = labels[i];
+      var addInput =  document.createElement("input");
+      addInput.type = "radio";
+      cell.appendChild(addLabel);
+      cell.appendChild(addInput);
+      row.appendChild(cell);
+      table.appendChild(row);
+    }
+    if(Y1==4)
+    {
+      if(colnum == 0)
+      {
+        var row = document.createElement("tr");
+        rownum = rownum+1;
+      }
+      var cell = document.createElement("td");
+      colnum = colnum+1;
+      var addLabel = document.createElement("label");
+      addLabel.innerText = labels[i];
+      var addInput =  document.createElement("input");
+      addInput.type = "checkbox";
+      cell.appendChild(addLabel);
+      cell.appendChild(addInput);
+      row.appendChild(cell);
+      table.appendChild(row);
+    }
+    if(Y1==5)
+    {
+      var addInput =  document.createElement("option");
+      addInput.innerText = labels[i];
+      selt.appendChild(addInput);
+      getresult.appendChild(selt);
+    }
+    if(Y1==6)
+    {
+      if(colnum == 0)
+      {
+        var row = document.createElement("tr");
+        rownum = rownum+1;
+      }
+      var cell = document.createElement("td");
+      colnum = colnum+1;
+      var addLabel = document.createElement("button");
+      addLabel.innerText = labels[i];
+      cell.appendChild(addLabel);
+      row.appendChild(cell);
+      table.appendChild(row);
+    }
+  }
+</script>

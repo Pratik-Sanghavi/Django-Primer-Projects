@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <title>Dynamic Control</title>
+  </head>
+  <body>
+    <form action = "" method = "get">
+        {%if Number %}
+        <label for="number">Enter number (1-100): </label> 
+        <input id="number" type="number" name="number" value="{{Number}}" readonly="readonly">
+        <br><br>
+        <label for="columns">Enter columns: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> 
+        <input id="columns" type="columns" name="columns" value="{{Columns}}" readonly="readonly">
+        {% else %}
+        <label for="number">Enter number (1-100): </label> 
+        <input id="number" type="number" name="number" required>
+        <br><br>
+        <label for="columns">Enter columns: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> 
+        <input id="columns" type="columns" name="columns" required>
+        {% endif %}
+        <input class = 'button' type="submit" value="OK"> 
+    </form>
+    <br><br>
+    <!-- Switch to matrix_view defined in urls.py on clicking submit button -->
+    <button class = 'button' id='submit' onclick="location.href='{%url 'drop_down' %}'">Submit</button>
+  </body> 
+</html>
